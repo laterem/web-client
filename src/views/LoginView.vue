@@ -37,9 +37,7 @@ export default {
         this.$session.start();
       }
       const { email, password } = this;
-      const {
-        data: { user },
-      } = await axios.post("http://0.0.0.0:8179/login", {
+      const { data: user } = await axios.post("http://0.0.0.0:8179/login", {
         login: email,
         password: password,
       });

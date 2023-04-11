@@ -105,17 +105,16 @@ export default {
       }
       const user = this.$session.get("user");
       if (typeof user != "undefined") {
-        return user;
+        this.user = user;
+      } else {
+        this.user = { name: "Not logged" };
       }
-      // Redirect to login page
-      // router.push({ name: "login" });
-      // User mock
-      return { name: "Not logged" };
     },
   },
   computed: {
     userName() {
-      return this.getUser().name;
+      this.getUser();
+      return this.user.first_name + " " + this.user.last_name;
     },
   },
 };

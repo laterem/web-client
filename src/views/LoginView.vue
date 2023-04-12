@@ -37,11 +37,11 @@ export default {
         this.$session.start();
       }
       const { email, password } = this;
-      const { data: user } = await axios.post("http://0.0.0.0:8179/login", {
+      const { data: id } = await axios.post("http://0.0.0.0:8179/login", {
         login: email,
         password: password,
       });
-      this.$session.set("user", user);
+      this.$session.set("user_id", id);
       router.push("/");
     },
   },

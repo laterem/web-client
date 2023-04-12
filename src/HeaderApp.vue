@@ -84,6 +84,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import mainIcon from "@/assets/icons/main-icon.vue";
 import userIcon from "@/assets/icons/user-icon.vue";
 // import router from "./router";
@@ -92,6 +93,8 @@ export default {
   data() {
     return {
       dropdownIsActive: false,
+      user: {},
+      userName: "Logging...",
     };
   },
   components: {
@@ -99,23 +102,35 @@ export default {
     userIcon: userIcon,
   },
   methods: {
-    async getUser() {
+    getUser() {
       if (!this.$session.exists) {
         this.$session.start();
       }
-      const user = this.$session.get("user");
-      if (typeof user != "undefined") {
-        this.user = user;
-      } else {
-        this.user = { name: "Not logged" };
+      const user_id = this.$session.get("user_id");
+      if (typeof user_id != "undefined") {
+        return user_id;
       }
+      return -1;
+    },
+    async getUserName(user_id = this.user_id) {
+      if (user_id == -1) {
+        return "Not Logged in";
+      }
+      const { data: user } = await axios.post("http://0.0.0.0:8179/get_user", {
+        id: user_id,
+      });
+      if (typeof user != "undefined") {
+        this.user.first_name = user.first_name;
+        this.user.last_name = user.last_name;
+        this.userName = user.first_name + " " + user.last_name;
+        return user.first_name + " " + user.last_name;
+      }
+      this.userName = "Unable to log in";
+      return "Unable to log in";
     },
   },
-  computed: {
-    userName() {
-      this.getUser();
-      return this.user.first_name + " " + this.user.last_name;
-    },
+  created() {
+    this.getUserName(this.getUser());
   },
 };
 </script>

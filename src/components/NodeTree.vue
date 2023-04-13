@@ -14,13 +14,13 @@
         of category name editing
         v-if="isEditable" -->
   </span>
-  <ul :id="categoryUlId" class="nested" :class="{ active: isActive }">
+  <ul v-show="isActive" :id="categoryUlId">
     <!-- Category render -->
-    <li v-for="child in childrenCategories" :key="child">
+    <li v-for="child in childrenCategories" v-show="isActive" :key="child">
       <NodeTree :node="child"></NodeTree>
     </li>
     <!-- Work render -->
-    <li v-for="child in childrenWorks" :key="child">
+    <li v-for="child in childrenWorks" v-show="isActive" :key="child">
       <span style="border: none">
         <a :href="'/works/' + child.id + '/'">{{ child.name }}</a>
       </span>

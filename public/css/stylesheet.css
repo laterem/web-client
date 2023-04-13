@@ -717,10 +717,6 @@ div#task-manage-table-column-header * * {
     background-color: var(--content-hover-color);
 }
 
-.active {
-    display: block;
-}
-
 connection {
     height: 0;
     display: block;

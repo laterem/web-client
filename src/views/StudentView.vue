@@ -16,8 +16,8 @@ import NavTree from "../components/NavTree.vue";
 export default {
   data() {
     return {
-      workTree: {}
-    }
+      workTree: {},
+    };
   },
   components: {
     NavTree,
@@ -37,9 +37,12 @@ export default {
       if (user_id == -1) {
         return "Not Logged in";
       }
-      const { data: work_tree } = await axios.post("http://0.0.0.0:8179/get_student_worktree", {
-        id: user_id,
-      });
+      const { data: work_tree } = await axios.post(
+        "http://0.0.0.0:8179/get_student_worktree",
+        {
+          id: user_id,
+        }
+      );
       this.workTree = work_tree;
       return work_tree;
     },

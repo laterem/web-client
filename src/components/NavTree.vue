@@ -14,10 +14,7 @@
   <ul v-if="workTree.id == 'mother'" class="wtree">
     <!-- Here must go list of childs -->
     <li>
-      <NodeTree
-        :node="JSON.parse(JSON.stringify(workTree.children, null, 4))[0]"
-        :isEditable="isEditable"
-      ></NodeTree>
+      <NodeTree :node="childrenList" :isEditable="isEditable"></NodeTree>
     </li>
   </ul>
 </template>
@@ -38,6 +35,12 @@ export default {
     return {
       iconFolder: "/static/icons/",
     };
+  },
+  computed: {
+    childrenList() {
+      // Psrsing and stringfying is needed because of proxy's
+      return JSON.parse(JSON.stringify(this.workTree.children, null, 4))[0];
+    },
   },
 };
 </script>
@@ -179,9 +182,5 @@ ul.wtree,
 
 .caret-down::before {
   transform: rotate(90deg);
-}
-
-.nested {
-  display: none;
 }
 </style>

@@ -4,9 +4,13 @@ Here must be NavTree but it needs users
     <NavTree :work-tree="workTree" />
   </aside>
   <aside id="content">
-    <h2>Это базовая страница</h2>
-    <h3>Перейдите на нужную работу по ссылке слева</h3>
-    <RouterView />
+    <div v-if="!hasNestedRoutes" id="content">
+      <h2>Это базовая страница</h2>
+      <h3>Перейдите на нужную работу по ссылке слева</h3>
+    </div>
+    <div v-else id="content">
+      <RouterView />
+    </div>
   </aside>
 </template>
 
@@ -19,6 +23,14 @@ export default {
     return {
       workTree: {},
     };
+  },
+  computed: {
+    hasNestedRoutes() {
+      if (this.$router.currentRoute.value.matched.length == 1) {
+        return false;
+      }
+      return true;
+    },
   },
   components: {
     NavTree,

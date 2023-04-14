@@ -38,7 +38,6 @@ export default {
     },
   },
   created() {
-    // get data from api
     this.getWorkData(
       this.getUser(),
       this.$router.currentRoute.value.params["id"]
@@ -46,9 +45,11 @@ export default {
 
     this.$watch(
       () => this.$route.params,
-      (toParams) => {
-        // react to route changes...
-        this.getWorkData(toParams);
+      () => {
+        this.getWorkData(
+          this.getUser(),
+          this.$router.currentRoute.value.params["id"]
+        );
       }
     );
   },

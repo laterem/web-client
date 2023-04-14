@@ -6,6 +6,7 @@ Here must be NavTree but it needs users
   <aside id="content">
     <h2>Это базовая страница</h2>
     <h3>Перейдите на нужную работу по ссылке слева</h3>
+    <RouterView />
   </aside>
 </template>
 

@@ -12,6 +12,11 @@ const routes = [
     component: () => import("@/views/LoginView.vue"),
   },
   {
+    path: "/logout",
+    name: "logout",
+    component: () => import("@/views/LogoutView.vue"),
+  },
+  {
     path: "/report_a_bug",
     name: "bugReport",
     component: () => import("@/views/BugReportView.vue"),
@@ -25,6 +30,13 @@ const routes = [
     path: "/student",
     name: "student",
     component: () => import("@/views/StudentView.vue"),
+    children: [
+      {
+        path: "works/:id",
+        name: "work",
+        component: () => import("@/views/studentPanel/WorkView.vue"),
+      },
+    ],
   },
   {
     path: "/teacher",

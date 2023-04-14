@@ -22,7 +22,9 @@
     <!-- Work render -->
     <li v-for="child in childrenWorks" v-show="isActive" :key="child">
       <span style="border: none">
-        <a :href="'/works/' + child.id + '/'">{{ child.name }}</a>
+        <router-link :to="'/student/works/' + child.id">{{
+          child.name
+        }}</router-link>
       </span>
       <!-- Progress line -->
     </li>

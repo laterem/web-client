@@ -8,6 +8,7 @@ import router from "@/router";
 export default {
   created() {
     this.$session.destroy();
+    this.$store.commit("setUserId", -1);
     router.push("/login");
   },
 };

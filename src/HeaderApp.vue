@@ -84,6 +84,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import axios from "axios";
 import mainIcon from "@/assets/icons/main-icon.vue";
 import userIcon from "@/assets/icons/user-icon.vue";
@@ -96,6 +97,9 @@ export default {
       user: {},
       userName: "Logging...",
     };
+  },
+  computed: {
+    ...mapState(["user_id"]),
   },
   components: {
     mainIcon: mainIcon,
@@ -114,6 +118,7 @@ export default {
     },
     async getUserName(user_id = this.user_id) {
       if (user_id == -1) {
+        this.userName = "Logging...";
         return "Not Logged in";
       }
       const { data: user } = await axios.post("http://0.0.0.0:8179/get_user", {
@@ -131,6 +136,12 @@ export default {
   },
   created() {
     this.getUserName(this.getUser());
+  },
+  watch: {
+    user_id() {
+      this.$session.set("user_id", this.user_id);
+      this.getUserName();
+    },
   },
 };
 </script>

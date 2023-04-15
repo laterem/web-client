@@ -42,6 +42,7 @@ export default {
         password: password,
       });
       this.$session.set("user_id", id);
+      this.$store.commit("setUserId", id);
       router.push("/");
     },
   },

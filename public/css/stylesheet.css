@@ -247,8 +247,9 @@ form.dropdown-toggle-form {
     background-color: var(--content-background-color);
 
     position: absolute;
-    top: 32px;
-    left: 24px;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
     text-align: center;
 
     box-shadow: 4px 4px 4px var(--blackout-shadow-color);

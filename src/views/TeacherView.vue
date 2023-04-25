@@ -34,7 +34,7 @@ aside#menu {
   bottom: 0px;
   left: 0px;
 
-  width: calc(20% - 10px);
+  width: calc(20% - 12px);
 
   justify-content: center;
   padding: 0px;
@@ -58,33 +58,28 @@ aside#menu {
 }
 
 aside#content {
-  top: 65px;
-  bottom: 10px;
+  top: 64px;
+  bottom: 12px;
   left: 20%;
-  right: 10px;
+  right: 12px;
 
   border-radius: 20px;
   box-shadow: 4px 4px 4px var(--content-shadow-color);
   background: var(--content-background-color);
 }
 
-div#user-table,
 div#all-groups-table,
 div#task-table,
 div#task-field-table {
   display: grid;
   grid-template-columns: auto auto 40px 40px;
 
-  border-radius: 0 0 10px 10px;
+  border-radius: 0 0 12px 12px;
   overflow: hidden;
   border-width: 1px;
   border-color: var(--dark-font-color);
   border-style: solid;
   width: 100%;
-}
-
-div#user-table {
-  grid-template-columns: auto auto max-content 40px;
 }
 
 div#all-groups-table {
@@ -96,7 +91,6 @@ div#task-table {
 }
 
 .group-table-element,
-.user-table-element,
 .all-groups-table-element,
 .work-table-element,
 .task-table-element,
@@ -104,17 +98,13 @@ div#task-table {
 #task-field-table *,
 #groups-in-work-table * {
   display: flex;
-  padding: 5px;
+  padding: 4px;
   border-collapse: collapse;
 }
 
 .group-table-element:nth-of-type(8n + 3),
 .group-table-element:nth-of-type(8n + 1),
 .group-table-element:nth-of-type(8n + 2),
-.user-table-element:nth-of-type(8n + 4),
-.user-table-element:nth-of-type(8n + 1),
-.user-table-element:nth-of-type(8n + 2),
-.user-table-element:nth-of-type(8n + 3),
 .all-groups-table-element:nth-of-type(2n + 1),
 .work-table-element:nth-of-type(6n + 1),
 .work-table-element:nth-of-type(6n + 2),
@@ -132,7 +122,6 @@ div#task-table {
   background-color: var(--content-hover-color);
 }
 
-.user-table-element a,
 .all-groups-table-element a,
 .task-table-element a,
 #task-field-table a,
@@ -141,7 +130,6 @@ div#task-table {
   color: var(--body-font-color);
 }
 
-div#user-table-header,
 div#group-table-header,
 div#all-groups-table-header,
 div#work-table-header,
@@ -150,13 +138,13 @@ div#work-stats-table-header,
 div#task-field-table-header,
 div#groups-in-work-table-header {
   display: grid;
-  border-radius: 10px 10px 0 0;
+  border-radius: 12px 12px 0 0;
   overflow: hidden;
   border-width: 1px;
   border-color: var(--dark-font-color);
   border-style: solid;
-  width: calc(100% - 22px);
-  margin-left: 10px;
+  width: calc(100% - 24px);
+  margin-left: 12px;
   grid-template-columns: auto max-content max-content;
   border-bottom: 0;
 }
@@ -166,13 +154,11 @@ div#work-stats-table-header {
 }
 
 div#work-stats-table-header.detached {
-  border-radius: 10px;
+  border-radius: 12px;
   border-bottom: 1px solid var(--dark-font-color);
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
-div#user-table-header,
-div#user-table,
 div#all-groups-table,
 div#all-groups-table-header,
 div#task-table,
@@ -184,7 +170,6 @@ div#task-field-table-header {
   margin-left: 0;
 }
 
-#user-table-header *,
 #all-groups-table-header *,
 #task-table-header * {
   display: inline-flex;
@@ -199,15 +184,15 @@ div#groups-in-work-table {
   display: grid;
   grid-template-columns: auto auto 40px 40px;
 
-  border-radius: 0 0 10px 10px;
+  border-radius: 0 0 12px 12px;
   overflow: hidden;
   border-width: 1px;
   border-color: var(--dark-font-color);
   border-style: solid;
-  width: calc(100% - 22px);
+  width: calc(100% - 24px);
 
-  margin-bottom: 10px;
-  margin-left: 10px;
+  margin-bottom: 12px;
+  margin-left: 12px;
 }
 
 div#work-table,
@@ -229,17 +214,17 @@ div#groups-in-work-table {
 
 div#task-manage-table {
   display: grid;
-  grid-template-columns: calc(50% - 5px) 10px calc(50% - 5px);
+  grid-template-columns: calc(50% - 4px) 8px calc(50% - 4px);
   align-items: baseline;
   overflow: hidden;
 
-  border-radius: 10px;
+  border-radius: 12px;
   border-width: 1px;
   border-color: var(--dark-font-color);
   border-style: solid;
   width: calc(100% - 20px);
 
-  top: 115px;
+  top: 116px;
   bottom: 10px;
 }
 
@@ -252,9 +237,9 @@ div#task-manage-table {
 }
 
 #task-manage-table div.highlighted {
-  border-radius: 10px;
-  padding: 5px;
-  height: calc(100% - 10px);
+  border-radius: 12px;
+  padding: 4px;
+  height: calc(100% - 12px);
 
   background-color: var(--content-hover-color);
 }
@@ -283,7 +268,7 @@ div#task-manage-table-column-header {
 }
 
 div#task-manage-table-column-header * {
-  margin: 0 0 0 10px;
+  margin: 0 0 0 12px;
 }
 
 div#task-manage-table-column-header * * {
@@ -310,7 +295,6 @@ div#task-manage-table-column-header * * {
 }
 
 .group-info:disabled,
-.user-table-element input:disabled,
 input:disabled {
   border: none;
   color: currentColor;

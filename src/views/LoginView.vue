@@ -1,15 +1,12 @@
 <template>
-  <aside id="menu"></aside>
-  <aside id="content">
-    <div id="content">
-      <form @submit.prevent="login">
-        <input v-model="email" type="text" placeholder="email" />
-        <input v-model="password" type="password" placeholder="password" />
-        <br />
-        <button type="submit">Log in</button>
-      </form>
-    </div>
-  </aside>
+  <div id="content">
+    <form @submit.prevent="login">
+      <input v-model="email" type="text" placeholder="email" />
+      <input v-model="password" type="password" placeholder="password" />
+      <br />
+      <button type="submit">Log in</button>
+    </form>
+  </div>
 </template>
 
 <script>
@@ -48,3 +45,21 @@ export default {
   },
 };
 </script>
+
+<style>
+#content {
+  position: absolute;
+  top: 64px;
+  bottom: 12px;
+  left: 12px;
+  right: 12px;
+
+  padding-top: 12px;
+
+  border-radius: 20px;
+  box-shadow: 4px 4px 4px var(--content-shadow-color);
+  background: var(--content-background-color);
+
+  text-align: center;
+}
+</style>

@@ -17,10 +17,10 @@
     </div>
   </div>
 
-  <div id="content-table">
+  <table id="content-table">
     <!-- Here goes iteration for users in all users, needs Django API -->
-    <template v-for="user in allUsers" :key="user.id">
-      <div style="grid-column: 1; border-left: none" class="user-table-element">
+    <tr v-for="user in allUsers" :key="user.id">
+      <td class="col1">
         <input
           :value="user.first_name"
           class="edit-user-{{user.id}}"
@@ -33,8 +33,8 @@
           disabled="true"
           name="user_lastname"
         />
-      </div>
-      <div style="grid-column: 2" class="user-table-element">
+      </td>
+      <td class="col2">
         <input
           :value="user.email"
           class="edit-user-{{user.id}}"
@@ -47,65 +47,52 @@
           name="user_password"
         />
         <button style="visibility: hidden" name="edit:{{user.email}}"></button>
-      </div>
-      <div style="grid-column: 3; padding: 0" class="user-table-element">
-        <form method="post">
-          <button
-            id="edit_button"
-            type="submit"
-            name="edit:{{user.email}}"
-            class="edit-user-{{user.id}}-confirm button-icon"
-            onclick="data_edit(this)"
-            style="display: none"
-          >
-            <div style="width: 1.5em">
-              <PencilIcon />
-            </div>
-          </button>
-          <button
-            id="edit_button"
-            type="button"
-            name="edit:{{user.email}}"
-            class="edit-user-{{user.id}}-undo button-icon"
-            onclick="data_edit(this)"
-            style="display: none"
-          >
-            <div style="width: 1.5em">{% include "icons/undo-icon.html" %}</div>
-          </button>
-          <button
-            id="edit_button"
-            type="button"
-            name="edit:{{user.email}}"
-            class="edit-user-{{user.id}}-edit button-icon"
-            onclick="data_edit(this)"
-            style="display: inline-flex"
-          >
-            <div style="width: 1.5em">
-              <PencilIcon />
-            </div>
-          </button>
-        </form>
-      </div>
-      <div
-        style="grid-column: 4; padding: 0; border-left: none"
-        class="user-table-element"
-      >
-        <form method="post">
-          <button
-            title="Удалить пользователя"
-            name="delete:{{user.email}}"
-            type="button"
-            class="button-icon"
-            onclick="delete_signal_to_send=this.name; $('#confirm-user-deleting-massage')[0].innerHTML = 'Вы уверены что хотите удалить пользователя ' + this.name.slice(this.name.indexOf(':') + 1) + '?'; $('#confirm-user-deleting-button')[0].name = this.name; disp_dialog($('#delete-user-confirm'))"
-          >
-            <div style="width: 1.5em; padding: 0">
-              <DeleteIcon />
-            </div>
-          </button>
-        </form>
-      </div>
-    </template>
-  </div>
+      </td>
+      <td class="col3">
+        <button
+          id="edit_button"
+          type="submit"
+          name="edit:{{user.email}}"
+          class="edit-user-{{user.id}}-confirm button-icon"
+          onclick="data_edit(this)"
+          style="display: none"
+        >
+          <PencilIcon />
+          <span>Редактировать</span>
+        </button>
+        <button
+          id="edit_button"
+          type="button"
+          name="edit:{{user.email}}"
+          class="edit-user-{{user.id}}-undo button-icon"
+          onclick="data_edit(this)"
+          style="display: none"
+        >
+          <div style="width: 1.5em">{% include "icons/undo-icon.html" %}</div>
+        </button>
+        <button
+          id="edit_button"
+          type="button"
+          name="edit:{{user.email}}"
+          class="edit-user-{{user.id}}-edit button-icon"
+          onclick="data_edit(this)"
+        >
+          <PencilIcon />
+          <span>Редактировать</span>
+        </button>
+        <button
+          title="Удалить пользователя"
+          name="delete:{{user.email}}"
+          type="button"
+          class="button-icon"
+          onclick="delete_signal_to_send=this.name; $('#confirm-user-deleting-massage')[0].innerHTML = 'Вы уверены что хотите удалить пользователя ' + this.name.slice(this.name.indexOf(':') + 1) + '?'; $('#confirm-user-deleting-button')[0].name = this.name; disp_dialog($('#delete-user-confirm'))"
+        >
+          <DeleteIcon />
+          <span>Удалить</span>
+        </button>
+      </td>
+    </tr>
+  </table>
   <!-- Code above includes modals, it needs to be totaly reworked -->
   <!-- <button id="blackout" style="display: none;" onclick="disp_dialog([$('#add-user'), $('#import-users')])"></button>
   {% include "./add_user.html" %}
@@ -193,24 +180,29 @@ button.highlighted {
 }
 
 div#header,
-div#content-table {
-  display: grid;
+table#content-table {
   position: absolute;
   left: 0;
   right: 0;
+  width: 100%;
 
   overflow: hidden;
 
   border: none;
 }
 
-div#content-table {
-  grid-template-columns: auto auto max-content 40px;
+table#content-table {
   top: 52px;
   border-radius: 0 0 12px 12px;
+  border-spacing: 0;
+}
+
+#content-table > tr {
+  width: 100%;
 }
 
 div#header {
+  display: grid;
   grid-template-columns: auto max-content max-content;
   top: 0;
 }
@@ -222,16 +214,67 @@ div#header {
   padding: 4px;
 }
 
-#content-table > * {
+#content-table > *,
+#content-table span {
   display: flex;
   padding: 4px;
   border-collapse: collapse;
 }
 
-#content-table > *:nth-of-type(8n + 4),
-#content-table > *:nth-of-type(8n + 1),
-#content-table > *:nth-of-type(8n + 2),
-#content-table > *:nth-of-type(8n + 3) {
+#content-table span {
+  display: inline-flex;
+}
+
+#content-table > *:nth-child(odd) {
   background-color: var(--content-hover-color);
+}
+
+.col1,
+.col2 {
+  width: calc(100% - 5em);
+}
+
+.col3 {
+  white-space: nowrap;
+  width: 30em;
+  justify-items: right;
+  display: grid;
+  grid-template-columns: auto min-content;
+  margin-right: 4px;
+}
+
+tr:hover button.button-icon {
+  opacity: 1;
+}
+
+.button-icon {
+  width: 2.5em;
+  height: 2.5em;
+  align-items: baseline;
+  white-space: nowrap;
+  overflow: hidden;
+  justify-items: center;
+  display: inline-grid;
+  grid-template-columns: 1.5em auto;
+  transition: width 1.5s ease-in-out 0.5s;
+  /* transition: opacity 0.5s ease-in-out; */
+  justify-self: end;
+  opacity: 0;
+}
+
+.button-icon > span {
+  opacity: 0;
+  transform: translateX(12em);
+  transition: all 1s ease-in-out 0.75s;
+}
+
+.button-icon:hover {
+  width: 12em;
+  background-color: var(--button-background-color);
+}
+
+.button-icon:hover > span {
+  opacity: 1;
+  transform: translateX(0);
 }
 </style>

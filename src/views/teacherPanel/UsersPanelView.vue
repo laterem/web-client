@@ -7,12 +7,12 @@
     </div>
     <div style="grid-column: 2">
       <button onclick="disp_dialog($('#import-users')[0])">
-        <ImportFromFileIcon /> Импорт
+        <ImportFromFileIcon /> <span>Импорт</span>
       </button>
     </div>
     <div style="grid-column: 3">
       <button class="highlighted" onclick="disp_dialog($('#add-user')[0])">
-        <AddUserIcon /> Добавить
+        <AddUserIcon /> <span>Добавить</span>
       </button>
     </div>
   </div>
@@ -59,7 +59,7 @@
             style="display: none"
           >
             <div style="width: 1.5em">
-              {% include "icons/pencil-icon.html" %}
+              <PencilIcon />
             </div>
           </button>
           <button
@@ -81,7 +81,7 @@
             style="display: inline-flex"
           >
             <div style="width: 1.5em">
-              {% include "icons/pencil-icon.html" %}
+              <PencilIcon />
             </div>
           </button>
         </form>
@@ -99,7 +99,7 @@
             onclick="delete_signal_to_send=this.name; $('#confirm-user-deleting-massage')[0].innerHTML = 'Вы уверены что хотите удалить пользователя ' + this.name.slice(this.name.indexOf(':') + 1) + '?'; $('#confirm-user-deleting-button')[0].name = this.name; disp_dialog($('#delete-user-confirm'))"
           >
             <div style="width: 1.5em; padding: 0">
-              {% include "icons/delete-icon.html" %}
+              <DeleteIcon />
             </div>
           </button>
         </form>
@@ -126,6 +126,8 @@
 import axios from "axios";
 import AddUserIcon from "@/assets/icons/add-user-icon.vue";
 import ImportFromFileIcon from "@/assets/icons/import-from-file-icon.vue";
+import PencilIcon from "@/assets/icons/pencil-icon.vue";
+import DeleteIcon from "@/assets/icons/delete-icon.vue";
 
 export default {
   data() {
@@ -136,6 +138,8 @@ export default {
   components: {
     AddUserIcon,
     ImportFromFileIcon,
+    PencilIcon,
+    DeleteIcon,
   },
   methods: {
     getUser() {
@@ -203,6 +207,7 @@ div#content-table {
 div#content-table {
   grid-template-columns: auto auto max-content 40px;
   top: 52px;
+  border-radius: 0 0 12px 12px;
 }
 
 div#header {
@@ -210,13 +215,14 @@ div#header {
   top: 0;
 }
 
-#header * {
+#header > *,
+#header span {
   display: inline-flex;
   align-items: center;
   padding: 4px;
 }
 
-#content-table * {
+#content-table > * {
   display: flex;
   padding: 4px;
   border-collapse: collapse;

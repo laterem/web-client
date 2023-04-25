@@ -18,64 +18,40 @@
   </div>
 
   <table id="content-table">
-    <!-- Here goes iteration for users in all users, needs Django API -->
     <tr v-for="user in allUsers" :key="user.id">
       <td class="col1">
-        <input
-          :value="user.first_name"
-          class="edit-user-{{user.id}}"
-          disabled="true"
-          name="user_name"
-        />
-        <input
-          :value="user.last_name"
-          class="edit-user-{{user.id}}"
-          disabled="true"
-          name="user_lastname"
-        />
+        <input :value="user.first_name" :disabled="!user.isEditing" />
+        <input :value="user.last_name" :disabled="!user.isEditing" />
       </td>
       <td class="col2">
-        <input
-          :value="user.email"
-          class="edit-user-{{user.id}}"
-          disabled="true"
-          name="user_email"
-        />
-        <input
-          class="edit-user-{{user.id}}"
-          disabled="true"
-          name="user_password"
-        />
+        <input :value="user.email" :disabled="!user.isEditing" />
+        <input class="edit-user-{{user.id}}" :disabled="!user.isEditing" />
         <button style="visibility: hidden" name="edit:{{user.email}}"></button>
       </td>
       <td class="col3">
         <button
-          id="edit_button"
           type="submit"
-          name="edit:{{user.email}}"
-          class="edit-user-{{user.id}}-confirm button-icon"
-          onclick="data_edit(this)"
-          style="display: none"
+          class="button-icon"
+          @click="editUser(user.id)"
+          v-if="user.isEditing"
         >
           <PencilIcon />
-          <span>Редактировать</span>
+          <span>Подтвердить</span>
         </button>
         <button
-          id="edit_button"
           type="button"
-          name="edit:{{user.email}}"
-          class="edit-user-{{user.id}}-undo button-icon"
+          class="button-icon"
           onclick="data_edit(this)"
-          style="display: none"
+          v-if="user.isEditing"
         >
-          <div style="width: 1.5em">{% include "icons/undo-icon.html" %}</div>
+          <UndoIcon />
+          <span>Отменить</span>
         </button>
         <button
-          id="edit_button"
           type="button"
-          name="edit:{{user.email}}"
-          class="edit-user-{{user.id}}-edit button-icon"
-          onclick="data_edit(this)"
+          class="button-icon"
+          @click="editUser(user.id)"
+          v-if="!user.isEditing"
         >
           <PencilIcon />
           <span>Редактировать</span>
@@ -115,6 +91,7 @@ import AddUserIcon from "@/assets/icons/add-user-icon.vue";
 import ImportFromFileIcon from "@/assets/icons/import-from-file-icon.vue";
 import PencilIcon from "@/assets/icons/pencil-icon.vue";
 import DeleteIcon from "@/assets/icons/delete-icon.vue";
+import UndoIcon from "@/assets/icons/undo-icon.vue";
 
 export default {
   data() {
@@ -127,6 +104,7 @@ export default {
     ImportFromFileIcon,
     PencilIcon,
     DeleteIcon,
+    UndoIcon,
   },
   methods: {
     getUser() {
@@ -148,6 +126,10 @@ export default {
       );
       this.allUsers = allUsers;
       return allUsers;
+    },
+    editUser(user_id = this.user_id) {
+      console.log(user_id);
+      this.allUsers[user_id].isEditing = !this.allUsers[user_id].isEditing;
     },
   },
   created() {
@@ -236,10 +218,10 @@ div#header {
 
 .col3 {
   white-space: nowrap;
-  width: 30em;
+  width: 37em;
   justify-items: right;
   display: grid;
-  grid-template-columns: auto min-content;
+  grid-template-columns: auto min-content min-content;
   margin-right: 4px;
 }
 

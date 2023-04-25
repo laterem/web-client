@@ -25,23 +25,18 @@
       </td>
       <td class="col2">
         <input :value="user.email" :disabled="!user.isEditing" />
-        <input class="edit-user-{{user.id}}" :disabled="!user.isEditing" />
-        <button style="visibility: hidden" name="edit:{{user.email}}"></button>
+        <input :disabled="!user.isEditing" />
       </td>
       <td class="col3">
-        <button
-          type="submit"
-          class="button-icon"
-          @click="editUser(user.id)"
-          v-if="user.isEditing"
-        >
+        <button type="submit" class="button-icon" v-if="user.isEditing">
+          <!-- It must send post request to server to edit user data -->
           <PencilIcon />
           <span>Подтвердить</span>
         </button>
         <button
           type="button"
           class="button-icon"
-          onclick="data_edit(this)"
+          @click="editUser(user.id)"
           v-if="user.isEditing"
         >
           <UndoIcon />
@@ -58,10 +53,13 @@
         </button>
         <button
           title="Удалить пользователя"
-          name="delete:{{user.email}}"
           type="button"
           class="button-icon"
-          onclick="delete_signal_to_send=this.name; $('#confirm-user-deleting-massage')[0].innerHTML = 'Вы уверены что хотите удалить пользователя ' + this.name.slice(this.name.indexOf(':') + 1) + '?'; $('#confirm-user-deleting-button')[0].name = this.name; disp_dialog($('#delete-user-confirm'))"
+          @click="
+            isDeleting = true;
+            isBlackout = true;
+            iteractionalUser = user;
+          "
         >
           <DeleteIcon />
           <span>Удалить</span>
@@ -70,19 +68,24 @@
     </tr>
   </table>
   <!-- Code above includes modals, it needs to be totaly reworked -->
-  <!-- <button id="blackout" style="display: none;" onclick="disp_dialog([$('#add-user'), $('#import-users')])"></button>
-  {% include "./add_user.html" %}
-  {% include "./import_users.html" %}
-  <form method="post">
-      {% csrf_token %}
-      <table id="delete-user-confirm" class="dialog-table" style="display: none;">
-          <tr><td colspan="2" id="confirm-user-deleting-massage">Вы уверены что хотите удалить пользователя?</td></tr>
-          <tr>
-              <td style="display: grid; justify-items: end;"><button id="confirm-user-deleting-button" type="submit" class="wrong">Подтвердить</button></td>
-              <td><button type="button" onclick="disp_dialog($('#delete-user-confirm'))">Отменить</button></td>
-          </tr>
-      </table>
-  </form> -->
+  <button
+    id="blackout"
+    v-show="isBlackout"
+    @click="
+      isBlackout = false;
+      isDeleting = false;
+    "
+  ></button>
+  <div v-show="isDeleting" class="dialog-table">
+    <h2>
+      Вы уверены что хотите удалить пользователя
+      {{ iteractionalUser.first_name }} {{ iteractionalUser.last_name }}?
+    </h2>
+    <button class="button-icon" style="background-color: var(--wrong-color)">
+      <DeleteIcon /><span>Удалить</span>
+    </button>
+    <button class="button-icon"><UndoIcon /><span>Отменить</span></button>
+  </div>
 </template>
 
 <script>
@@ -97,6 +100,9 @@ export default {
   data() {
     return {
       allUsers: [],
+      isBlackout: false,
+      isDeleting: false,
+      iteractionalUser: {},
     };
   },
   components: {
@@ -239,7 +245,9 @@ tr:hover button.button-icon {
   display: inline-grid;
   grid-template-columns: 1.5em auto;
   transition: width 1.5s ease-in-out 0.5s;
-  /* transition: opacity 0.5s ease-in-out; */
+}
+
+tr .button-icon {
   justify-self: end;
   opacity: 0;
 }

@@ -248,7 +248,8 @@ form.dropdown-toggle-form {
 
     position: absolute;
     top: 32px;
-    left: calc(50% - 120px);
+    left: 24px;
+    text-align: center;
 
     box-shadow: 4px 4px 4px var(--blackout-shadow-color);
 }
@@ -256,7 +257,7 @@ form.dropdown-toggle-form {
 .dialog-table::before {
     content: 'x';
     position: relative;
-    left: calc(100% - 12px);
+    left: calc(50% - 12px);
     cursor: pointer;
 }
 

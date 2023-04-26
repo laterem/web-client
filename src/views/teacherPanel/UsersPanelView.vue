@@ -6,67 +6,70 @@
       >
     </div>
     <div style="grid-column: 2">
-      <button onclick="disp_dialog($('#import-users')[0])">
-        <ImportFromFileIcon /> <span>Импорт</span>
-      </button>
+      <button><ImportFromFileIcon /> <span>Импорт</span></button>
     </div>
     <div style="grid-column: 3">
-      <button class="highlighted" onclick="disp_dialog($('#add-user')[0])">
-        <AddUserIcon /> <span>Добавить</span>
-      </button>
+      <button class="highlighted"><AddUserIcon /> <span>Добавить</span></button>
     </div>
   </div>
 
-  <table id="content-table">
-    <tr v-for="user in allUsers" :key="user.id">
-      <td class="col1">
-        <input :value="user.first_name" :disabled="!user.isEditing" />
-        <input :value="user.last_name" :disabled="!user.isEditing" />
-      </td>
-      <td class="col2">
-        <input :value="user.email" :disabled="!user.isEditing" />
-        <input :disabled="!user.isEditing" />
-      </td>
-      <td class="col3">
-        <button type="submit" class="button-icon" v-if="user.isEditing">
-          <!-- It must send post request to server to edit user data -->
-          <PencilIcon />
-          <span>Подтвердить</span>
-        </button>
-        <button
-          type="button"
-          class="button-icon"
-          @click="editUser(user.id)"
-          v-if="user.isEditing"
-        >
-          <UndoIcon />
-          <span>Отменить</span>
-        </button>
-        <button
-          type="button"
-          class="button-icon"
-          @click="editUser(user.id)"
-          v-if="!user.isEditing"
-        >
-          <PencilIcon />
-          <span>Редактировать</span>
-        </button>
-        <button
-          title="Удалить пользователя"
-          type="button"
-          class="button-icon"
-          @click="
-            isDeleting = true;
-            isBlackout = true;
-            iteractionalUser = user;
-          "
-        >
-          <DeleteIcon />
-          <span>Удалить</span>
-        </button>
-      </td>
-    </tr>
-  </table>
+  <form @submit.prevent="editUser(iteractionalUserId)">
+    <table id="content-table">
+      <tr v-for="user in allUsers" :key="user.id">
+        <td class="col1">
+          <input v-model="user.first_name" :disabled="!user.isEditing" />
+          <input v-model="user.last_name" :disabled="!user.isEditing" />
+        </td>
+        <td class="col2">
+          <input v-model="user.email" :disabled="!user.isEditing" />
+          <input v-model="user.password" :disabled="!user.isEditing" />
+        </td>
+        <td class="col3">
+          <button
+            type="submit"
+            class="button-icon"
+            v-if="user.isEditing"
+            @click="iteractionalUserId = user.id"
+          >
+            <!-- It must send post request to server to edit user data -->
+            <PencilIcon />
+            <span>Подтвердить</span>
+          </button>
+          <button
+            type="button"
+            class="button-icon"
+            @click="editUser(user.id)"
+            v-if="user.isEditing"
+          >
+            <UndoIcon />
+            <span>Отменить</span>
+          </button>
+          <button
+            type="button"
+            class="button-icon"
+            @click="editUser(user.id)"
+            v-if="!user.isEditing"
+          >
+            <PencilIcon />
+            <span>Редактировать</span>
+          </button>
+          <button
+            title="Удалить пользователя"
+            type="button"
+            class="button-icon"
+            @click="
+              isDeleting = true;
+              isBlackout = true;
+              iteractionalUser = user;
+            "
+          >
+            <DeleteIcon />
+            <span>Удалить</span>
+          </button>
+        </td>
+      </tr>
+    </table>
+  </form>
   <!-- Code above includes modals, it needs to be totaly reworked -->
   <button
     id="blackout"
@@ -103,6 +106,7 @@ export default {
       isBlackout: false,
       isDeleting: false,
       iteractionalUser: {},
+      iteractionalUserId: -1,
     };
   },
   components: {
@@ -133,9 +137,37 @@ export default {
       this.allUsers = allUsers;
       return allUsers;
     },
-    editUser(user_id = this.user_id) {
-      console.log(user_id);
-      this.allUsers[user_id].isEditing = !this.allUsers[user_id].isEditing;
+    async editUser(user_id = this.user_id) {
+      let user_id_in_list = -1;
+      for (let i = 0; i < this.allUsers.length; i++) {
+        if (this.allUsers[i].id == user_id) {
+          user_id_in_list = i;
+        }
+      }
+
+      if (user_id_in_list != -1) {
+        let user = this.allUsers[user_id_in_list];
+        if (user.isEditing) {
+          const { email, first_name, last_name, password } = user;
+          const { data: result } = await axios.post(
+            "http://0.0.0.0:8179/edit_user",
+            {
+              id: this.user_id,
+              changing_id: user_id,
+              new_data: {
+                email: email,
+                first_name: first_name,
+                last_name: last_name,
+                password: password,
+              },
+            }
+          );
+          if (!(result === 0)) {
+            console.log(result);
+          }
+        }
+        this.allUsers[user_id_in_list].isEditing = !user.isEditing;
+      }
     },
   },
   created() {

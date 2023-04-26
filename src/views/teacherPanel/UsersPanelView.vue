@@ -244,7 +244,7 @@ tr:hover button.button-icon {
   justify-items: center;
   display: inline-grid;
   grid-template-columns: 1.5em auto;
-  transition: width 1s ease-in-out 0.5s;
+  transition: width 80ms ease-in-out 360ms;
 }
 
 tr .button-icon {
@@ -255,7 +255,7 @@ tr .button-icon {
 .button-icon > span {
   opacity: 0;
   transform: translateX(12em);
-  transition: all 0.75s ease-in-out 0.75s;
+  transition: all 40ms ease-in-out 380ms;
 }
 
 .button-icon:hover {

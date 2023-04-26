@@ -84,10 +84,26 @@
       Вы уверены что хотите удалить пользователя
       {{ iteractionalUser.first_name }} {{ iteractionalUser.last_name }}?
     </h2>
-    <button class="button-icon" style="background-color: var(--wrong-color)">
+    <button
+      @click="
+        deleteUser(iteractionalUser.id);
+        isDeleting = false;
+        isBlackout = false;
+      "
+      class="button-icon"
+      style="background-color: var(--wrong-color)"
+    >
       <DeleteIcon /><span>Удалить</span>
     </button>
-    <button class="button-icon"><UndoIcon /><span>Отменить</span></button>
+    <button
+      @click="
+        isDeleting = false;
+        isBlackout = false;
+      "
+      class="button-icon"
+    >
+      <UndoIcon /><span>Отменить</span>
+    </button>
   </div>
 </template>
 
@@ -167,6 +183,18 @@ export default {
           }
         }
         this.allUsers[user_id_in_list].isEditing = !user.isEditing;
+      }
+    },
+    async deleteUser(user_id = this.user_id) {
+      const { data: result } = await axios.post(
+        "http://0.0.0.0:8179/delete_user",
+        {
+          id: this.user_id,
+          deleting_id: user_id,
+        }
+      );
+      if (!(result === 0)) {
+        console.log(result);
       }
     },
   },

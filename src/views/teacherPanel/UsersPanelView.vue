@@ -6,10 +6,22 @@
       >
     </div>
     <div style="grid-column: 2">
-      <button><ImportFromFileIcon /> <span>Импорт</span></button>
+      <button>
+        <ImportFromFileIcon />
+        <span>Импорт</span>
+      </button>
     </div>
     <div style="grid-column: 3">
-      <button class="highlighted"><AddUserIcon /> <span>Добавить</span></button>
+      <button
+        @click="
+          isAdding = true;
+          isBlackout = true;
+        "
+        class="highlighted"
+      >
+        <AddUserIcon />
+        <span>Добавить</span>
+      </button>
     </div>
   </div>
 
@@ -77,9 +89,11 @@
     @click="
       isBlackout = false;
       isDeleting = false;
+      isAdding = false;
     "
   ></button>
   <div v-show="isDeleting" class="dialog-table">
+    <!-- User Deleting modal -->
     <h2>
       Вы уверены что хотите удалить пользователя
       {{ iteractionalUser.first_name }} {{ iteractionalUser.last_name }}?
@@ -105,6 +119,62 @@
       <UndoIcon /><span>Отменить</span>
     </button>
   </div>
+  <div v-show="isAdding" class="dialog-table">
+    <!-- User Adding modal -->
+    <h2>Добавление пользователя</h2>
+    <form>
+      <table>
+        <tr>
+          <td>Email:</td>
+          <td>
+            <input v-model="newUser.email" placeholder="Введите сюда email" />
+          </td>
+        </tr>
+        <tr>
+          <td>Имя:</td>
+          <td>
+            <input
+              v-model="newUser.first_name"
+              placeholder="Введите сюда имя"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Фамилия:</td>
+          <td>
+            <input
+              v-model="newUser.last_name"
+              placeholder="Введите сюда фамилию"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Пароль:</td>
+          <td>
+            <input
+              v-model="newUser.password"
+              placeholder="Введите сюда пароль"
+            />
+          </td>
+        </tr>
+      </table>
+      <button type="submit" class="button-icon highlighted">
+        <AddUserIcon />
+        <span>Добавить</span>
+      </button>
+      <button
+        @click="
+          isAdding = false;
+          isBlackout = false;
+        "
+        type="button"
+        class="button-icon"
+      >
+        <UndoIcon />
+        <span>Отменить</span>
+      </button>
+    </form>
+  </div>
 </template>
 
 <script>
@@ -121,8 +191,15 @@ export default {
       allUsers: [],
       isBlackout: false,
       isDeleting: false,
+      isAdding: false,
       iteractionalUser: {},
       iteractionalUserId: -1,
+      newUser: {
+        email: "",
+        first_name: "",
+        last_name: "",
+        password: "",
+      },
     };
   },
   components: {

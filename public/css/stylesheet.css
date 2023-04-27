@@ -248,6 +248,8 @@ form.dropdown-toggle-form {
 
     position: absolute;
     top: 24px;
+    max-height: calc(100% - 48px);
+    overflow: scroll;
     left: 50%;
     transform: translateX(-50%);
     text-align: center;

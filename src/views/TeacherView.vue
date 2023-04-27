@@ -38,10 +38,10 @@ aside#menu {
 
   justify-content: center;
   padding: 0px;
-  border-radius: 0px 20px 20px 0px;
+  border-radius: 0px 32px 32px 0px;
 
   background: var(--content-background-color);
-  box-shadow: 4px 4px 4px var(--content-shadow-color);
+  box-shadow: 2px 4px 8px var(--content-shadow-color);
 
   overflow-x: scroll;
 }
@@ -59,12 +59,12 @@ aside#menu {
 
 aside#content {
   top: 64px;
-  bottom: 12px;
+  bottom: 8px;
   left: 20%;
   right: 12px;
 
-  border-radius: 20px;
-  box-shadow: 4px 4px 4px var(--content-shadow-color);
+  border-radius: 32px;
+  box-shadow: 2px 4px 8px var(--content-shadow-color);
   background: var(--content-background-color);
 }
 

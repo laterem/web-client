@@ -123,41 +123,16 @@
     <!-- User Adding modal -->
     <h2>Добавление пользователя</h2>
     <form>
-      <table>
-        <tr>
-          <td>Email:</td>
-          <td>
-            <input v-model="newUser.email" placeholder="Введите сюда email" />
-          </td>
-        </tr>
-        <tr>
-          <td>Имя:</td>
-          <td>
-            <input
-              v-model="newUser.first_name"
-              placeholder="Введите сюда имя"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>Фамилия:</td>
-          <td>
-            <input
-              v-model="newUser.last_name"
-              placeholder="Введите сюда фамилию"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>Пароль:</td>
-          <td>
-            <input
-              v-model="newUser.password"
-              placeholder="Введите сюда пароль"
-            />
-          </td>
-        </tr>
-      </table>
+      <h5>Email</h5>
+      <input v-model="newUser.email" placeholder="jhon@example.com" />
+      <h5>Имя</h5>
+      <input v-model="newUser.first_name" placeholder="Jhon" />
+      <h5>Фамилия</h5>
+      <input v-model="newUser.last_name" placeholder="Doe" />
+      <h5>Пароль</h5>
+      <input v-model="newUser.password" placeholder="Password123" />
+      <br />
+      <br />
       <button type="submit" class="button-icon highlighted">
         <AddUserIcon />
         <span>Добавить</span>
@@ -287,16 +262,24 @@ a {
   color: var(--body-font-color);
 }
 
+h2 {
+  margin: 12px;
+}
+
+h5 {
+  margin: 4px;
+}
+
 button {
   background-color: var(--button-icon-background-color);
-  padding: 0.5em;
+  padding: 0.5em 1em 0.5em 1em;
   text-align: center;
   align-items: center;
   text-decoration: none;
   display: inline-flex;
   margin: 4px 2px;
   cursor: pointer;
-  border-radius: 20px;
+  border-radius: 16px;
   height: fit-content;
 }
 
@@ -318,7 +301,7 @@ table#content-table {
 
 table#content-table {
   top: 52px;
-  border-radius: 0 0 12px 12px;
+  border-radius: 0 0 16px 16px;
   border-spacing: 0;
 }
 
@@ -373,7 +356,7 @@ tr:hover button.button-icon {
 }
 
 .button-icon {
-  width: 2.5em;
+  width: 3.5em;
   height: 2.5em;
   align-items: baseline;
   white-space: nowrap;

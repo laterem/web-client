@@ -16,7 +16,7 @@ div#content {
   right: 10px;
 
   border-radius: 20px;
-  box-shadow: 4px 4px 4px var(--content-shadow-color);
+  box-shadow: 2px 4px 8px var(--content-shadow-color);
   background: var(--content-background-color);
 
   overflow: scroll;

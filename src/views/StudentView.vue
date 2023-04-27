@@ -85,7 +85,7 @@ aside#menu {
   border-radius: 20px;
 
   background: var(--content-background-color);
-  box-shadow: 4px 4px 4px var(--content-shadow-color);
+  box-shadow: 2px 4px 8px var(--content-shadow-color);
 
   overflow-x: scroll;
 }
@@ -120,7 +120,7 @@ aside#content {
   width: calc(80% - 30px);
 
   border-radius: 20px;
-  box-shadow: 4px 4px 4px var(--content-shadow-color);
+  box-shadow: 2px 4px 8px var(--content-shadow-color);
   background: var(--content-background-color);
 }
 
@@ -213,7 +213,7 @@ aside#foot {
   background-color: var(--foot-background-color);
   border: 1px solid var(--foot-border-color);
   border-radius: 40px;
-  box-shadow: 4px 4px 4px var(--foot-shadow-color);
+  box-shadow: 2px 4px 8px var(--foot-shadow-color);
 
   white-space: nowrap;
   overflow-x: scroll;

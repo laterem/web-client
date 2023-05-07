@@ -6,7 +6,12 @@
       >
     </div>
     <div style="grid-column: 2">
-      <button>
+      <button
+        @click="
+          isImporting = true;
+          isBlackout = true;
+        "
+      >
         <ImportFromFileIcon />
         <span>Импорт</span>
       </button>
@@ -90,6 +95,7 @@
       isBlackout = false;
       isDeleting = false;
       isAdding = false;
+      isImporting = false;
     "
   ></button>
   <div v-show="isDeleting" class="dialog-table">
@@ -122,7 +128,7 @@
   <div v-show="isAdding" class="dialog-table">
     <!-- User Adding modal -->
     <h2>Добавление пользователя</h2>
-    <form>
+    <form @submit.prevent="createUser()">
       <h5>Email</h5>
       <input v-model="newUser.email" placeholder="jhon@example.com" />
       <h5>Имя</h5>
@@ -150,6 +156,28 @@
       </button>
     </form>
   </div>
+  <div v-show="isImporting" class="dialog-table">
+    <h2>Импорт пользователей</h2>
+    <h5>Выберите csv файл</h5>
+    <input type="file" ref="fileInput" @change="importUsers()" />
+    <br />
+    <br />
+    <button type="submit" class="button-icon highlighted">
+      <ImportFromFileIcon />
+      <span>Импортировать</span>
+    </button>
+    <button
+      @click="
+        isImporting = false;
+        isBlackout = false;
+      "
+      type="button"
+      class="button-icon"
+    >
+      <UndoIcon />
+      <span>Отменить</span>
+    </button>
+  </div>
 </template>
 
 <script>
@@ -167,6 +195,7 @@ export default {
       isBlackout: false,
       isDeleting: false,
       isAdding: false,
+      isImporting: false,
       iteractionalUser: {},
       iteractionalUserId: -1,
       newUser: {
@@ -175,6 +204,10 @@ export default {
         last_name: "",
         password: "",
       },
+      importFile: {
+        value: null,
+      },
+      fileInput: null,
     };
   },
   components: {
@@ -247,6 +280,48 @@ export default {
       );
       if (!(result === 0)) {
         console.log(result);
+      }
+    },
+    async createUser() {
+      const { email, first_name, last_name, password } = this.newUser;
+      try {
+        const { data: result } = await axios.post(
+          "http://0.0.0.0:8179/create_user",
+          {
+            email: email,
+            first_name: first_name,
+            last_name: last_name,
+            password: password,
+            id: this.user_id,
+          }
+        );
+        if (!(result === 0)) {
+          console.log(result);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    onFileChange() {
+      this.importFile.value = this.fileInput.value.files;
+    },
+    async importUsers() {
+      try {
+        const { data: result } = await axios.post(
+          "http://0.0.0.0:8179/import_users",
+          {
+            id: this.user_id,
+            file: this.importFile.value,
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        if (!(result === 0)) {
+          console.log(result);
+        }
+      } catch (error) {
+        console.log(error);
       }
     },
   },

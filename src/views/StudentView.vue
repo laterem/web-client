@@ -16,7 +16,7 @@ Here must be NavTree but it needs users
 
 <script>
 import axios from "axios";
-import NavTree from "../components/NavTree.vue";
+import NavTree from "@/components/NavTree.vue";
 
 export default {
   data() {

@@ -1,7 +1,7 @@
 <template>
   <div id="header">
     <div style="grid-column: 1">
-      <span style="font-size: larger; margin-left: 5px"
+      <span style="font-size: larger; margin-left: 4px"
         >Все пользователи сайта</span
       >
     </div>
